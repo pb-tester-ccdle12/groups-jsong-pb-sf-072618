@@ -1,5 +1,5 @@
 
-# Groups, Generator Point and Public Point
+# Groups
 
 ### Mathematical Groups
 
@@ -115,24 +115,69 @@ while product != inf:
 print(counter)
 ```
 
-### Generator Point
+### Test Driven Exercise
 
-You can think of the generator G as the first point after infinity on the curve. Begin with infinity and add G; the result is G. Add G to this and you get 2G. Add G to this and you get 3G. And so on. If you add G a total of n times (where n is the order of the curve) you will be back at infinity, where you started; the whole curve is a never-ending loop. The order n is how many distinct points are on the curve, or in Bitcoin terms, how many possible private keys there are (plus 1 for the point at infinity). [[Source]](https://bitcoin.stackexchange.com/a/34133)
+It's your turn to write a test now. Write the test below checking for whether the point is on the curve using the comments as a guide.
 
 
 ```python
-# Confirgming G is on the curve
-p = 2**256 - 2**32 - 977
-x = 0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798
-y = 0x483ADA7726A3C4655DA4FBFC0E1108A8FD17B448A68554199C47D08FFB10D4B8
-print(y**2 % p == (x**3 + 7) % p)
+from helper import run_test
+from unittest import TestCase
+from ecc import FieldElement, Point
+
+class ECCTest(TestCase):
+
+   def test_rmul(self):
+        # tests the following scalar multiplications
+        # 2*(192,105)
+        # 2*(143,98)
+        # 2*(47,71)
+        # 4*(47,71)
+        # 8*(47,71)
+        # 21*(47,71)
+        prime = 223
+        a = FieldElement(0, prime)
+        b = FieldElement(7, prime)
+
+        multiplications = (
+            # (coefficient, x1, y1, x2, y2)
+            (2, 192, 105, 49, 71),
+            (2, 143, 98, 64, 168),
+            (2, 47, 71, 36, 111),
+            (4, 47, 71, 194, 51),
+            (8, 47, 71, 116, 55),
+            (21, 47, 71, None, None),
+        )
+
+        # iterate over the multiplications
+        for s, x1_raw, y1_raw, x2_raw, y2_raw in multiplications:
+            # Initialize points this way:
+            # x1 = FieldElement(x1_raw, prime)
+            # y1 = FieldElement(y1_raw, prime)
+            # p1 = Point(x1, y1, a, b)
+            x1 = FieldElement(x1_raw, prime)
+            y1 = FieldElement(y1_raw, prime)
+            p1 = Point(x1, y1, a, b)
+            # initialize the second point based on whether it's the point at infinity
+            # x2 = FieldElement(x2_raw, prime)
+            # y2 = FieldElement(y2_raw, prime)
+            # p2 = Point(x2, y2, a, b)
+            if x2_raw is None:
+                p2 = Point(None, None, a, b)
+            else:
+                x2 = FieldElement(x2_raw, prime)
+                y2 = FieldElement(y2_raw, prime)
+                p2 = Point(x2, y2, a, b)
+        
+            # check that the product is equal to the expected point
+            self.assertEqual(s*p1, p2)
 ```
 
+### Run your tests!
+
+See whether your test works by running the cell below (remember to run the cell above too!).
+
 
 ```python
-# Confirming order of G is n
-from ecc import G
-
-n = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141
-print(n*G)
+run_test(ECCTest('test_rmul'))
 ```
