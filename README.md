@@ -5,7 +5,8 @@
 
 Unlike fields, groups have only a single operation. In our case, Point Addition is our operation. We also have a few other properties like closure, invertibility, commutativity and associativity. Lastly, we need the identity.
 
-It turns out that we have all of these things with Point Addition. Let's look at each property
+It turns out that we have all of these things with Point Addition. Let's look at each property:
+
 
 #### Identity
 
@@ -13,9 +14,8 @@ If you haven't guessed by now, the identity is defined as the point at infinity.
 
 0 + P = P
 
-We call 0 the point at infinity because visually, it's the point that exists to help the math work out:
+We call 0 the point at infinity because visually, it's the point that exists to help the math work out.
 
-image::intersect2-1.png[Vertical Line]
 
 #### Closure
 
@@ -33,9 +33,11 @@ How do we know if this element is in the group? If a+b < n, then we know it's in
 
 So we know that this element is in the group, proving closure.
 
+
 #### Invertibility
 
-Mathematically, we know that if aG is in the group, (n-a)G is also in the group. You can add them together to get 0.
+Mathematically, we know that if aG is in the group, `(n-a)G` is also in the group. You can add them together to get 0.
+
 
 #### Commutativity
 
@@ -43,13 +45,14 @@ P+Q=Q+P because they end up drawing the same line.
 
 The equations for figuring out the third point also make this clear:
 
-P~1~=(x~1~,y~1~), P~2~=(x~2~,y~2~), P~3~=(x~3~,y~3~)
+\\(P_{1} = (x_{1}, y_{1}), P_{2} = (x_{2}, y_{2}), P_{3} = (x_{3}, y_{3}) \\)
 
-x~3~=s^2^-x~1~-x~2~
+\\(x_{3} = s^2 - x_{1} - x_{2}\\)
 
-y~3~=s(x~1~-x~3~)-y~1~=s(x~2~-x~3~)-y~2~
+\\(y_{3} = s(x_{1}-x_{3}) - y_{1} = s(x_{2}-x_{3}) - y_{2}\\)
 
-You can swap P~1~ and P~2~ to get the exact same equation.
+You can swap \\(P_{1}\\) and \\(P_{2}\\) to get the exact same equation.
+
 
 #### Associativity
 
